@@ -1,0 +1,146 @@
+{% extends "home.html" %}
+
+{% comment %} <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Report</title>
+    <style>
+
+        .date-time {
+            
+            margin-bottom: 20px; /* Add some space below */
+            text-align:right;
+        }
+    
+    @media print {
+            .date-time {
+                display: block; /* Show when printing */
+                text-align:right; /* Align left for printing */
+                margin: 0; /* Remove margin for printing */
+            }
+            .search-bar {
+                display: none; /* Hide search bar when printing */
+            }
+            #ho{
+                display: none;
+            }
+            #pr{
+            display: none;
+        }
+        }
+    </style>
+</head>
+<body>
+<center>
+    <h1>Mother Theresa Institute Of Computer Applications</h1>
+    <h2>Penalty Report</h2>
+
+
+    <div class="date-time">
+        <p>{{ date }}</p>
+    </div>
+
+    <div class="search-bar">
+        <form method="get" >
+            
+            <input type="text" name="query" placeholder="Search id" required>
+            <button type="submit">Search</button>
+        </form>
+    </div>
+<br><br>
+<table border="1" align="center" style="width:850px;height:200px">
+    <tr>
+        <th>Name</th>
+        <th>Book</th>
+        <th>Issue Date</th>
+        <th>Return Date</th>
+        <th>Penalty</th>
+    </tr>
+{% if loans %}
+
+    {% for loan in loans %}
+    <tr>
+        <td>{{ loan.name.lastName }}</td>
+
+        <td>{{ loan.b_name.bookName }}</td>
+        <td>{{ loan.is_date.issue_date }}</td>
+        <td>{{ loan.returned_date}}</td>
+        <td>{{ loan.penalty_amount }}</td>
+    </tr>
+    {% endfor %}
+    {% else %}<tr><td colspan="8" style="text-align:center;font-size:22px;">No data found</td></tr>
+{% endif %}
+</table>
+</center>
+<div align="end">
+    <button id="ho"><a href="/library/lib">Home</a></button>
+    <button onclick="print()" id="pr">Print</button>
+    </div>
+
+</body>
+</html>    
+     {% endcomment %}
+
+
+     
+{% block content %}
+     <div style="text-align: center; background-color: rgba(255, 255, 255, 0.95); padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); margin: auto; max-width: 1000px;">
+         <h2>Penality List</h2>
+     
+         <!-- Link to create a new student -->
+         {% comment %} <a href="{% url 'bookissue_create' %}" style="padding: 10px 15px; background-color: #00f7ff67; color: rgb(8, 8, 8); border-radius: 5px; text-decoration: none;">Add New Book</a> {% endcomment %}
+         
+         <!-- Search form -->
+          {% comment %} {% url 'bookissue_search' %} {% endcomment %}
+         <form method="GET" action="{% url 'bookpenalty_search' %}" style="margin: 20px 0;">
+             <input type="text" name="q" placeholder="Search by title" style="padding: 5px; border: 1px solid #ccc; border-radius: 5px;">
+             <button type="submit" style="padding: 5px 10px; background-color: green; color:white; border: none; border-radius: 5px;">Search</button>
+         </form>
+     
+         <!-- Display list of students in a table -->
+         <table style="width: 100%; border-collapse: collapse; margin-top: 20px;text-align: left;">
+             <thead>
+                 <tr style="background-color: #fdfdfd; color: rgb(12, 12, 12);">
+                     <th style="padding: 10px; border: 1px solid #ddd;">StudentName</th>
+                     <th style="padding: 10px; border: 1px solid #ddd;">RegNo</th>
+     
+                     <th style="padding: 10px; border: 1px solid #ddd;">BookName</th>
+                     <th style="padding: 10px; border: 1px solid #ddd;">Issue date</th>
+                     <th style="padding: 10px; border: 1px solid #ddd;">Returned date</th>
+                     <th style="padding: 10px; border: 1px solid #ddd;">Penality</th>
+
+                     {% comment %} <th style="padding: 10px; border: 1px solid #ddd;">Actions</th> {% endcomment %}
+                 </tr>
+             </thead>
+             <tbody>
+                {% for book in loans %}
+                 <tr>
+                    <td style="padding: 10px; border: 1px solid #ddd;">{{ book.name.studentName }}</td>
+                    <td style="padding: 10px; border: 1px solid #ddd;">{{ book.name.studentRegNo }}</td>
+                    <td style="padding: 10px; border: 1px solid #ddd;">{{ book.b_name.title }}</td>
+                    <td style="padding: 10px; border: 1px solid #ddd;">{{ book.is_date.issue_date }}</td>
+                    <td style="padding: 10px; border: 1px solid #ddd;">{{ book.returned_date }}</td>
+                    <td style="padding: 10px; border: 1px solid #ddd;">{{ book.penalty_amount }}</td>
+
+ 
+    
+                   {% comment %} <td style="padding: 10px; border: 1px solid #ddd;">
+                         <a href="{% url 'bookreturn_update' book.pk %}" style="padding: 5px 10px; background-color: #00e5ffc0; color: rgb(13, 13, 13); border-radius: 5px; text-decoration: none;">Edit</a>
+                         <a href="{% url 'bookreturn_delete' book.pk %}" style="padding: 5px 10px; background-color: #07cbf2cc; color: rgb(16, 16, 16); border-radius: 5px; text-decoration: none;" onclick="return confirm('Are you sure you want to delete this student?');">Delete</a>
+                     </td>  {% endcomment %}
+                 </tr>
+                 {% empty %}
+                 <tr>
+                     <td colspan="7" style="padding: 10px; border: 1px solid #ddd;">No Book found.</td>
+                 </tr>
+                 {% endfor %}
+             </tbody>
+         </table>
+     
+         <br>
+         <a href="{% url 'home' %}" style="padding: 10px 15px; background-color: #05bcfff0; color: rgb(18, 17, 17); border-radius: 5px; text-decoration: none;">Back</a>
+     </div>
+     {% endblock %}
+     

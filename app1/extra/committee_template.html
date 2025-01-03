@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ committee_name }} - Committee</title>
+</head>
+<body>
+    <h1>{{ committee_name }}</h1>
+
+    <p>
+        {{ committee_descriptions.get(committee_name, "No description available for this committee.") }}
+    </p>
+
+    <form method="get">
+        <label for="batchID">Select Batch:</label>
+        <select name="batchID" id="batchID">
+            <option value="">All Batches</option>
+            {% for batch in all_batches %}
+                <option value="{{ batch }}" {% if batch == batch_id %}selected{% endif %}>{{ batch }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Filter</button>
+    </form>
+
+    <h2>Transactions</h2>
+    <ul>
+        {% for transaction in transactions %}
+            <li>{{ transaction }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

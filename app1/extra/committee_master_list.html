@@ -1,0 +1,42 @@
+{% extends "home.html" %}
+
+{% block content %}
+<div style="text-align: center; background-color: rgba(255, 255, 255, 0.95); padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); margin: auto; max-width: 800px;">
+    <h2 style="margin-bottom: 20px; color: #1e2020b0;">Committee Master List</h2>
+
+    <a href="{% url 'committee_master_create' %}" style="padding: 10px 15px; background-color: #00f7ffb9; color: rgb(15, 15, 15); border-radius: 5px; text-decoration: none; margin-bottom: 20px; display: inline-block;">Add New Committee</a>
+
+    <form method="GET" action="{% url 'committee_master_list' %}" style="margin-bottom: 20px;">
+        <input type="text" name="search" placeholder="Search by Committee ID or Name" style="padding: 5px; border: 1px solid #ccc; border-radius: 5px;">
+        <button type="submit" style="padding: 5px 10px; background-color: #00f2ffad; color: rgb(9, 9, 9); border: none; border-radius: 5px;">Search</button>
+    </form>
+
+    <table style="width: 100%; border-collapse: collapse; margin: 20px 0;text-align: left;">
+        <thead>
+            <tr style="background-color: #f2f2f2;">
+                <th style="border: 1px solid #ddd; padding: 8px;">Committee ID</th>
+                <th style="border: 1px solid #ddd; padding: 8px;">Committee Name</th>
+                <th style="border: 1px solid #ddd; padding: 8px;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for committee in committees %}
+                <tr>
+                    <td style="border: 1px solid #ddd; padding: 8px;">{{ committee.committeeId }}</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">{{ committee.committeeName }}</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">
+                        <a href="{% url 'committee_master_update' committee.pk %}" style="padding: 5px 10px; background-color: #00ffee9f; color: rgb(19, 18, 18); border-radius: 5px; text-decoration: none;">Edit</a>
+                        <a href="{% url 'committee_master_delete' committee.pk %}" style="padding: 5px 10px; background-color: #4dfff0b4; color: rgb(14, 14, 14); border-radius: 5px; text-decoration: none;" onclick="return confirm('Are you sure you want to delete this committee?');">Delete</a>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="3" style="border: 1px solid #ddd; padding: 8px; text-align: center;">No committees found.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <br>
+    <a href="{% url 'home' %}" style="padding: 10px 15px; background-color: #007bff; color: white; border-radius: 5px; text-decoration: none;">Back</a>
+</div>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends "home.html" %}
+
+{% block content %}
+<div style="padding: 20px; background-color: rgba(255, 255, 255, 0.95); margin: auto; max-width: 1200px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);">
+    <h2 style="text-align: center;">All Transactions Committee</h2>
+
+    {% if grouped_data %}
+        {% for committee_name, batches in grouped_data.items %}
+            <h3 style="margin-top: 20px; color: #007bff;">Committee: {{ committee_name }}</h3>
+
+            {% for batch_id, members in batches.items %}
+                <h4 style="margin-left: 20px; color: #17a2b8;">Batch ID: {{ batch_id }}</h4>
+
+                <table style="width: 100%; border-collapse: collapse; margin-top: 10px; margin-left: 20px;">
+                    <thead>
+                        <tr style="background-color: #f9f9f9;">
+                            <th style="padding: 10px; border: 1px solid #ddd;">Name</th>
+                            <th style="padding: 10px; border: 1px solid #ddd;">Designation</th>
+                            <th style="padding: 10px; border: 1px solid #ddd;">Committee Designation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for member in members %}
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #ddd;">{{ member.Name }}</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">{{ member.designation }}</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">{{ member.committeeDesignation }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endfor %}
+        {% endfor %}
+    {% else %}
+        <p>No transactions found.</p>
+    {% endif %}
+</div>
+{% endblock %}
+
+<style>
+    table {
+        width: 100%;
+        margin-top: 10px;
+        border-collapse: collapse;
+    }
+    th, td {
+        padding: 8px;
+        border: 1px solid #ddd;
+    }
+    h3, h4 {
+        margin: 15px 0;
+    }
+</style>

@@ -1,0 +1,116 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+
+    <style>
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .signup-container {
+            background: rgba(255, 255, 255, 0.85);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            width: 400px;
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #555;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border 0.3s ease;
+        }
+
+        .form-group input:focus {
+            border-color: #6a11cb;
+            outline: none;
+            box-shadow: 0 0 8px rgba(106, 17, 203, 0.2);
+        }
+
+        .error {
+            color: red;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        .message-list {
+            list-style: none;
+            padding: 0;
+            color: red;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            border: none;
+            border-radius: 6px;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: linear-gradient(135deg, #2575fc, #6a11cb);
+        }
+
+        p {
+            margin: 15px 0;
+            font-size: 14px;
+            color: #555;
+        }
+
+        p a {
+            color: #6a11cb;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        p a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="signup-container">
+        <h2>Signup</h2>
+        <form method="post">
+            {% csrf_token %}

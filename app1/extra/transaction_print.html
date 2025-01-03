@@ -1,0 +1,67 @@
+{% extends "home.html" %}
+
+{% block content %}
+<div style="padding: 20px; background-color: #fff; margin: auto; max-width: 1000px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);">
+    <h2 style="text-align: center;">Transaction Print Report</h2>
+    
+    {% if batch_id %}
+    <p><strong>Batch ID:</strong> {{ batch_id }}</p>
+    {% endif %}
+    
+    {% if committee_name %}
+    <p><strong>Committee Name:</strong> {{ committee_name }}</p>
+    {% endif %}
+
+    <!-- Paragraph based on committee name -->
+    <p>
+        {% if committee_name == "Admission Committee" %}
+            The Admission Committee is responsible for the admission process of all students...
+        {% elif committee_name == "Anti-Ragging Committee" %}
+            The Anti Ragging Committee aims to take strict action against ragging activities...
+        {% elif committee_name == "Cultural Committee" %}
+            The Cultural Committee oversees the organization of all cultural events...
+        {% elif committee_name == "Discipline Committee" %}
+            The Discipline Committee ensures that all students maintain discipline...
+        {% elif committee_name == "Internal Complaints Committee" %}
+            The Internal Complaints Committee provides a platform for students and staff...
+        {% elif committee_name == "Library Committee" %}
+            The Library Committee is responsible for the management and operation of the library...
+        {% elif committee_name == "SC/ST Committee" %}
+            The SC/ST Committee works towards ensuring the welfare of students...
+        {% elif committee_name == "Student and Staff Grievance Committee" %}
+            The Student and Staff Grievance Committee addresses complaints...
+        {% elif committee_name == "Student Council" %}
+            The Student Council is the governing body that represents the student body...
+        {% elif committee_name == "Sports Committee" %}
+            The Sports Committee manages the institution's sports activities...
+        {% elif committee_name == "Women Empowerment Committee (WEC)" %}
+            The Women Empowerment Committee (WEC) is committed to promoting gender equality...
+        {% endif %}
+    </p>
+
+    <!-- Transactions Table -->
+    <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+        <thead>
+            <tr style="background-color: #f9f9f9;">
+                <th style="padding: 10px; border: 1px solid #ddd;">Name</th>
+                <th style="padding: 10px; border: 1px solid #ddd;">Designation</th>
+                <th style="padding: 10px; border: 1px solid #ddd;">Committee Designation</th>
+                <th style="padding: 10px; border: 1px solid #ddd;">Batch ID</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for transaction in transactions %}
+            <tr>
+                <td style="padding: 10px; border: 1px solid #ddd;">{{ transaction.Name }}</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">{{ transaction.designation }}</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">{{ transaction.committeeDesignation }}</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">{{ transaction.batchID }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Print Button -->
+    <button onclick="window.print();" style="margin-top: 20px; padding: 10px 15px; background-color: #28a745; color: white; border: none; border-radius: 5px;">Print</button>
+</div>
+{% endblock %}

@@ -1,0 +1,56 @@
+
+{% extends "home2.html" %}
+
+{% block content %}
+<div style="text-align: center; background-color: rgba(255, 255, 255, 0.95); padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); margin: auto; max-width: 800px;">
+    <h2>Report for BookReturned </h2>
+    {% comment %} <p>Date and Time: {{ current_time|date:"D, d M Y H:i:s" }}</p> {% endcomment %}
+
+    <form method="POST" style="margin-bottom: 10px;">
+        {% csrf_token %}
+        <input type="text" name="search_value" class="b" placeholder="Enter book name" style="padding: 5px; margin: 10px;">
+        <button type="submit" class="b" style="padding: 5px 10px; background-color: #007bff; color: white; border: none; border-radius: 5px;">Search</button>
+    </form>
+
+    {% if error_message %}
+        <p style="color: red;">{{ error_message }}</p>
+    {% endif %}
+
+    <h3 class="b">Results:</h3>
+    <table style="width: 100%; border-collapse: collapse; margin: 20px 0;text-align: left;">
+        <thead>
+            <tr style="background-color: #f2f2f2;">
+                <th style="padding: 10px; border: 1px solid #ddd;">Name</th>
+                <th style="padding: 10px; border: 1px solid #ddd;">RegNo</th>
+
+                <th style="padding: 10px; border: 1px solid #ddd;">BookName</th>
+                <th style="padding: 10px; border: 1px solid #ddd;">Issue date</th>
+                <th style="padding: 10px; border: 1px solid #ddd;">Return date</th>
+
+              
+            </tr>
+        </thead>
+        <tbody>
+            {% for book in books %}
+                <tr>
+                <td style="padding: 10px; border: 1px solid #ddd;">{{ book.name.studentName }}</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">{{ book.name.studentRegNo }}</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">{{ book.b_name.title }}</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">{{ book.is_date.issue_date }}</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">{{ book.returned_date }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="5" style="border: 1px solid #ddd; padding: 8px; text-align: center;">No book found.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <br>
+    <button onclick="window.print();" class="b" style="padding: 5px 10px; font-size:16px;height:35px; background-color: #28a745; color: white; border: none; border-radius: 5px;">Print Report</button>
+
+    <a href="{% url 'bookreturn_report' %}"  class="b" style="padding: 10px 15px; background-color: #007bff; color: white; border-radius: 5px; text-decoration: none;">View All Records</a>
+    <a href="{% url 'home' %}" class="b" style="padding: 10px 15px; background-color: #007bff; color: white; border-radius: 5px; text-decoration: none;">Back</a>
+</div>
+{% endblock %}

@@ -1,0 +1,257 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Management System</title>
+    <style>
+        body {
+            background: url('{% static "img/call.jpg" %}') no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333333;
+        }
+
+        header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+            background-color: rgb(48, 86, 92);
+            color: #fff;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .header-title {
+    font-size: 28px;
+    font-weight: bold;
+    margin: 5px 0;
+    text-transform: uppercase;
+    background: linear-gradient(90deg, #00C9FF, #9f92fe);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: glow 1.5s infinite alternate;
+    letter-spacing: 2px;
+}
+
+@keyframes glow {
+    from {
+        text-shadow: 0 0 5px #00c8ff18, 0 0 10px hwb(330 57% 0% / 0.139), 0 0 15px #92fe9d1d;
+    }
+    to {
+        text-shadow: 0 0 10px #ff0099, 0 0 20px #92FE9D, 0 0 30px #92FE9D;
+    }
+}
+
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color:rgb(48, 86, 92);
+            margin-top: 120px;
+            position: sticky;
+            top: 160px;
+            width: 100%;
+            z-index: 999;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        nav li {
+            position: relative;
+        }
+
+        nav a {
+            display: block;
+            color: #f0f0f0;
+            padding: 15px 25px;
+            text-decoration: none;
+            font-weight: bold;
+            text-align: center;
+            font-size: 18px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        nav a:hover {
+            background-color: #555;
+            transform: translateY(-2px);
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #fff;
+            min-width: 200px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            z-index: 1;
+            border-radius: 5px;
+            margin-top: 1px;
+            padding: 5px 0;
+        }
+
+        .dropdown-content a {
+            color: #333;
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 16px;
+            display: block;
+            transition: background-color 0.3s;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f0f0f0;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .left-login-container {
+            position: fixed;
+            left: 20px;
+            top: 150px;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            width: 300px;
+            z-index: 1001;
+        }
+
+        .left-login-container p {
+            margin: 0;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+
+#div1>label
+{
+    width:100px;
+    display:inline-block;
+    color:white;
+}
+h2{
+    color:rgb(22, 88, 91);
+}
+#div2>label{
+    width:150px;
+    display:inline-block;
+    color:white;
+}
+#div1 input{
+    height:20px;
+}
+#div2 input{
+    height:20px;
+}
+#div1 #id_batchId, #id_semester{
+    width:170px;
+    height:25px;
+}
+#div2 #id_batchNo,#id_sem,#id_course,#id_department,#id_designation,#id_bname,#id_std_Name,#id_name,#id_b_name,#id_is_date{
+    width:170px;
+    height:25px;
+}
+li p{
+    color:orange;
+    font-weight:bold;
+    {% comment %} font-family:cursive; {% endcomment %}
+    {% comment %} font-size:22px; {% endcomment %}
+}
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-title">MOTHER THERESA INSTITUTE OF COMPUTER APPLICATIONS</div>
+        <div class="header-title">PG COLLEGE LIBRARY MANAGEMENT SYSTEM</div>
+        <body style="background-image:url('{% static 'images/lib3.jpg' %}');background-repeat:no-repeat;background-size:cover"></body>
+    </header>
+
+    {% comment %} <div class="left-login-container">
+        {% if user.is_authenticated %}
+            <p>Hello, {{ user.username }}! You are logged in.</p>
+        {% endif %}
+    </div> {% endcomment %}
+
+    <nav>
+        <ul>
+            <li class="dropdown">
+                <a href="#">Admin Panel</a>
+                <div class="dropdown-content">
+                    <a href="{% url 'admin_notifications' %}">Admin Notifications</a>
+                    <a href="{% url 'manage_password_reset_requests' %}">Password Reset Requests</a>
+                </div>
+            </li>
+            <li class="dropdown">
+                <a href="#">Master</a>
+                <div class="dropdown-content">
+                    <a href="{% url 'batchmaster_list' %}">Batch Master</a>
+                    <a href="{% url 'semester_list' %}">Semester Master</a>
+                    <a href="{% url 'student_list' %}">Student Master</a>
+                    <a href="{% url 'staffmaster_list' %}">Staff Master</a>
+                    <a href="{% url 'book_list' %}">Book Master</a>
+                </div>
+            </li>
+            <li class="dropdown">
+                <a href="#">Transactions</a>
+                <div class="dropdown-content">
+                     <a href="{% url 'bookissue_list'%}">Book Issue</a>
+                    <a href="{% url 'bookreturn_list'%}">Book Return</a> 
+                    <a href="{% url 'penalty'%}">Penalty</a>
+                </div>
+            </li>
+            <li class="dropdown">
+                <a href="#">Reports</a>
+                <div class="dropdown-content">
+                    
+                    <a href="{% url 'student_report_all'%}">Student Report</a>
+                    <a href="{% url 'staffmaster_report'%}">Staff Report</a>
+                    <a href="{% url 'book_report'%}">Book Report</a>
+                    <a href="{%url 'bookissue_report'%}">Issued Books Report</a>
+                    <a href="{% url 'bookreturn_report'%}">Returned Books Report</a>
+                    <a href="{% url 'penaltyreport' %}">Penalty Report</a>
+
+                    <a href="{% url 'semester_report' %}">Semester Report</a>
+                    <a href="{% url 'batchmaster_report' %}">Batch Report</a>
+
+                    
+                </div>
+            </li>
+            <li class="dropdown">
+                <a href="#">Backup/Restore</a>
+                <div class="dropdown-content">
+                    <a href="#">Insert</a>
+                </div>
+            </li>
+            <li>{% if user.is_authenticated %}
+                {% comment %} <div class="left-login-container"> {% endcomment %}
+                    {% comment %} {% if user.is_authenticated %} {% endcomment %}
+                        <p>Hello, {{ user.username }}</p>
+                    
+                        {% endif %}
+            </li>
+            <li><a href="{% url 'logout' %}">Logout</a>
+                </li>
+        </ul>
+    </nav>
+<br>
+    {% block content %}
+
+    {% endblock %}
+</body>
+</html>
