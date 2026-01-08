@@ -69,10 +69,10 @@ urlpatterns = [
     path('books/<int:pk>/edit/', views.book_update, name='book_update'),
     path('books/<int:pk>/delete/', views.book_delete, name='book_delete'),
     path('books/search/', views.book_search, name='book_search'),
+    path('books/report/', views.book_report, name='book_report'),
 
     # path('books/report/', views.book_report, name='book_report_all'),
     # path('books/report/<int:pk>/', views.book_report, name='book_report'),
-    path('books/report/', views.book_report, name='book_report'),
 
 
     path('booksissue/', views.bookissue_list, name='bookissue_list'),
