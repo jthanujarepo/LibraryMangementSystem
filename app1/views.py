@@ -117,6 +117,35 @@ def delete_admin_notification(request, pk):
 # Login view
 
 
+# def login_view(request):
+#     if request.method == 'POST':
+#         form = LoginForm(request, data=request.POST)
+
+#         if form.is_valid():
+#             username = form.cleaned_data['username']
+#             user = User.objects.get(username=username)
+#             # Allow admin users to log in regardless of reset approval
+#             if user.is_staff:
+#                 login(request, user)
+#                 messages.success(request, "You have logged in successfully as admin.")
+#                 return redirect('home')  # Redirect to home or another page
+#             # Fetch all PasswordResetRequests for the user
+#             reset_requests = PasswordResetRequest.objects.filter(user=user)
+#             # Check the latest reset request
+#             reset_allowed = any(req.is_reset_allowed for req in reset_requests)
+#             if not reset_allowed:
+#                 messages.error(request, "You must reset your password before logging in.")
+#                 return render(request, 'login.html', {'form': form})
+#             login(request, user)
+#             messages.success(request, "You have logged in successfully.")
+#             return redirect('home')  # Redirect to home or another page
+#     else:
+#         form = LoginForm()
+#     return render(request, 'login.html', {'form': form})
+
+
+######newly modified
+
 def login_view(request):
     if request.method == 'POST':
         form = LoginForm(request, data=request.POST)
@@ -124,24 +153,41 @@ def login_view(request):
         if form.is_valid():
             username = form.cleaned_data['username']
             user = User.objects.get(username=username)
-            # Allow admin users to log in regardless of reset approval
+
+            # 1️⃣ Admin users → always allowed
             if user.is_staff:
                 login(request, user)
                 messages.success(request, "You have logged in successfully as admin.")
-                return redirect('home')  # Redirect to home or another page
-            # Fetch all PasswordResetRequests for the user
+                return redirect('home')
+
+            # 2️⃣ Check if user has any password reset request
             reset_requests = PasswordResetRequest.objects.filter(user=user)
-            # Check the latest reset request
-            reset_allowed = any(req.is_reset_allowed for req in reset_requests)
-            if not reset_allowed:
+
+            # 3️⃣ If NO reset request exists → allow login
+            if not reset_requests.exists():
+                login(request, user)
+                messages.success(request, "You have logged in successfully.")
+                return redirect('home')
+
+            # 4️⃣ If reset request exists → check approval
+            latest_request = reset_requests.latest('id')
+            if not latest_request.is_reset_allowed:
                 messages.error(request, "You must reset your password before logging in.")
                 return render(request, 'login.html', {'form': form})
+
+            # 5️⃣ Reset approved → allow login
             login(request, user)
             messages.success(request, "You have logged in successfully.")
-            return redirect('home')  # Redirect to home or another page
+            return redirect('home')
+
     else:
         form = LoginForm()
+
     return render(request, 'login.html', {'form': form})
+
+
+
+
 
 from .forms import LoginForm, PasswordResetForm
 def reset_password_view(request):
@@ -298,6 +344,14 @@ def reset_password_in_login(request, user_id):
 
 
 
+# def home(request):
+#     return render(request, 'home.html')
+
+# @login_required 
+from django.views.decorators.cache import never_cache
+
+@never_cache
+@login_required(login_url='/login/')
 def home(request):
     return render(request, 'home.html')
 def home2(request):

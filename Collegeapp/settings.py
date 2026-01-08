@@ -23,11 +23,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-*vknmjbolkg6+2j96u0rh$_i^)18pc*p2%h6_4#ruovl281exh'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
-DEBUG=False
+DEBUG = True
+# DEBUG=False
 
 # ALLOWED_HOSTS = []
-ALLOWED_HOSTS = ['.onrender.com']
+# ALLOWED_HOSTS = ['.onrender.com']
+
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -168,3 +170,8 @@ MESSAGE_TAGS = {
 ########
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/home/'
+LOGOUT_REDIRECT_URL = '/login/'

@@ -114,3 +114,12 @@
         <h2>Signup</h2>
         <form method="post">
             {% csrf_token %}
+{{ form.as_p }}
+    <button type="submit" class="btn1">Signup</button> &nbsp;&nbsp;
+    <br>
+    
+    <a href="{% url 'login' %}" style="font-size:20px;color:white">Already have account?</a>
+</form></div>
+</center>
+
+</body>

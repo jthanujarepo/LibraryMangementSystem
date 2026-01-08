@@ -6,7 +6,8 @@ from .views import reset_password_in_login
 
 urlpatterns = [
 
-    path('', views.home, name='home'),
+    path('', views.home, name='home'),  
+    # path('', views.login_view, name='home'),  
 
     path('admin-login/', views.admin_login, name='admin_login'),
     path('user-login/', views.user_login, name='user_login'),
