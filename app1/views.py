@@ -297,7 +297,10 @@ def reset_password_in_login(request, user_id):
     return render(request, 'reset_password_in_login.html', {'user': user})
 
 
+from django.views.decorators.cache import never_cache
 
+@never_cache
+@login_required(login_url='/login/')
 def home(request):
     return render(request, 'home.html')
 def home2(request):
