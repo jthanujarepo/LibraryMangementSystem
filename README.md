@@ -80,7 +80,7 @@ https://library-mangement-system-bpp1.onrender.com
 ## 📂 GitHub Repository
 
 ```
-https://github.com/jthanujarepo/PG-College-Library-Management-System
+https://github.com/jthanujarepo/LibraryManagementSystem
 ```
 
 ---
